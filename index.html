@@ -1,1 +1,298 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Josef Sleiman | Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Plus+Jakarta+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0a0b10;
+            --surface: #12141d;
+            --accent: #d4af37;
+            --text-main: #ffffff;
+            --text-dim: #94a3b8;
+            --border: rgba(255, 255, 255, 0.1);
+        }
 
+        html {
+            scroll-behavior: smooth;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--bg);
+            color: var(--text-main);
+            line-height: 1.8;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 80px 24px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .line {
+            width: 40px;
+            height: 2px;
+            background: var(--accent);
+            margin: 0 auto 20px;
+        }
+
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2.5rem, 8vw, 4rem);
+            margin-bottom: 10px;
+            letter-spacing: -0.02em;
+        }
+
+        .subtitle {
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        /* Navigations-Grid */
+        .grid-links {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-bottom: 100px;
+        }
+
+        .action-card {
+            background: linear-gradient(145deg, #161822 0%, #12141d 100%);
+            padding: 25px;
+            border-radius: 20px;
+            border: 1px solid var(--border);
+            text-decoration: none;
+            color: var(--text-main);
+            transition: all 0.4s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-height: 220px;
+        }
+
+        .action-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.4);
+        }
+
+        .action-card h2 {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        .action-card p {
+            font-size: 0.8rem;
+            color: var(--text-dim);
+            margin-bottom: 20px;
+            line-height: 1.4;
+        }
+
+        .btn-action {
+            display: inline-block;
+            background: var(--accent);
+            color: #000;
+            padding: 10px;
+            border-radius: 10px;
+            font-size: 0.7rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            text-align: center;
+            transition: 0.3s;
+        }
+
+        .btn-outline {
+            display: inline-block;
+            border: 1px solid var(--accent);
+            color: var(--accent);
+            padding: 10px;
+            border-radius: 10px;
+            font-size: 0.7rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            text-align: center;
+            transition: 0.3s;
+        }
+
+        .action-card:hover .btn-action {
+            background: #fff;
+        }
+
+        /* GYAR Artikel-stil */
+        .gyar-content {
+            margin-top: 60px;
+            padding-top: 60px;
+            border-top: 1px solid var(--border);
+        }
+
+        .gyar-header {
+            margin-bottom: 60px;
+            text-align: center;
+        }
+
+        .gyar-header h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2rem, 5vw, 2.8rem);
+            margin-bottom: 15px;
+            line-height: 1.1;
+        }
+
+        .tag-cloud {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .tag {
+            font-size: 0.7rem;
+            padding: 4px 12px;
+            border-radius: 100px;
+            background: var(--border);
+            color: var(--text-dim);
+            text-transform: uppercase;
+        }
+
+        h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            margin: 40px 0 20px;
+            color: var(--accent);
+        }
+
+        .gyar-content p {
+            margin-bottom: 25px;
+            color: var(--text-dim);
+            font-size: 1.1rem;
+        }
+
+        .experiment-box {
+            background: var(--surface);
+            padding: 40px;
+            border-left: 4px solid var(--accent);
+            border-radius: 0 12px 12px 0;
+            margin: 40px 0;
+        }
+
+        .footer {
+            margin-top: 100px;
+            text-align: center;
+            padding: 40px;
+            border-top: 1px solid var(--border);
+            color: var(--text-dim);
+            font-size: 0.8rem;
+        }
+
+        @media (max-width: 800px) {
+            .grid-links {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <div class="line"></div>
+            <h1>Josef Sleiman</h1>
+            <p class="subtitle">Digital Portfolio</p>
+        </header>
+
+        <div class="grid-links">
+            <!-- LÄNK TILL CV.HTML -->
+            <a href="cv.html" class="action-card">
+                <div>
+                    <span style="font-size: 0.6rem; color: var(--accent); font-weight: 700; letter-spacing: 1px;">01. PROFIL</span>
+                    <h2>Curriculum Vitae</h2>
+                    <p>Mina erfarenheter, utbildningar och kompetenser presenterade i helskärm.</p>
+                </div>
+                <span class="btn-action">Se Mitt CV</span>
+            </a>
+
+            <!-- LÄNK TILL GYMNASIEARBETE.HTML -->
+            <a href="gymnasiearbete.html" class="action-card">
+                <div>
+                    <span style="font-size: 0.6rem; color: var(--accent); font-weight: 700; letter-spacing: 1px;">02. FORSKNING</span>
+                    <h2>Fullständig Rapport</h2>
+                    <p>Hela mitt gymnasiearbete om kundpsykologi på en egen sida.</p>
+                </div>
+                <span class="btn-action">Läs Rapporten</span>
+            </a>
+
+            <!-- LÄNK TILL GAMES.HTML -->
+            <a href="games.html" class="action-card">
+                <div>
+                    <span style="font-size: 0.6rem; color: var(--accent); font-weight: 700; letter-spacing: 1px;">03. INTERAKTIVT</span>
+                    <h2>Mina Spel</h2>
+                    <p>En samling interaktiva projekt och kodexperiment.</p>
+                </div>
+                <span class="btn-action">Spela Nu</span>
+            </a>
+        </div>
+
+        <!-- SNABBKNAPP FÖR ATT SCROLLA NER TILL TEXTEN PÅ STARTIDAN -->
+        <div style="text-align: center; margin-bottom: 40px;">
+            <a href="#las-mer" class="btn-outline" style="text-decoration: none; padding: 12px 30px;">Snabbvy: Läs GyAr här ↓</a>
+        </div>
+
+        <!-- GYMNASIEARBETE I TEXTFORM -->
+        <article class="gyar-content" id="las-mer">
+            <div class="gyar-header">
+                <div class="tag-cloud">
+                    <span class="tag">Forskning</span>
+                    <span class="tag">Psykologi</span>
+                    <span class="tag">ICA</span>
+                </div>
+                <h2>Från hej till lojal kund.</h2>
+                <p style="color: var(--text-dim); font-size: 0.9rem;">En studie om kundbemötande på ICA</p>
+            </div>
+
+            <section>
+                <h3>Inledning</h3>
+                <p>
+                    I mitt gymnasiearbete skriver jag om kundbemötandets betydelse för försäljning med utgångspunkt från min APL-plats på ICA. 
+                    Jag valde detta område eftersom vi på ICA prioriterar kundmötet högt.
+                </p>
+            </section>
+
+            <section class="experiment-box">
+                <h4 style="color: var(--accent); margin-bottom: 10px; text-transform: uppercase; font-size: 0.8rem;">Experimentet i kassan</h4>
+                <p style="margin:0;">
+                    Resultatet var tydligt: Ett aktivt och glatt bemötande ledde till merförsäljning och att stressade kunder blev synbart lugnare.
+                </p>
+            </section>
+
+            <section>
+                <h3>Slutsats</h3>
+                <p>
+                    Små saker som att le och visa intresse påverkar kundens upplevelse och vilja att handla mer. Det är avgörande för butikens image.
+                </p>
+            </section>
+        </article>
+
+        <footer class="footer">
+            <p>PORTFOLIO MMXXIV • JOSEF SLEIMAN</p>
+        </footer>
+    </div>
+
+</body>
+</html>
