@@ -1,1 +1,363 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Josef & Ali - Mot Etage</title>
+    <style>
+        :root {
+            --sky: #010208;
+            --road: #111;
+            --josef-shirt: #1a5276;
+            --ali-shirt: #ba4a00;
+            --skin: #e0ac69;
+            --hair: #1a110a;
+        }
 
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background: var(--sky);
+            font-family: 'Impact', sans-serif;
+        }
+
+        .stage {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+        .scenery-container {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 1500%;
+            height: 100%;
+            display: flex;
+            align-items: flex-end;
+            transition: transform 65s linear;
+        }
+
+        .scenery-container.moving {
+            transform: translateX(-90%);
+        }
+
+        /* Malmö landmarks */
+        .torso-bg {
+            position: absolute;
+            bottom: 35%;
+            width: 60px;
+            height: 350px;
+            background: #080808;
+            left: 1200px;
+            clip-path: polygon(10% 0, 90% 0, 100% 100%, 0 100%);
+            opacity: 0.6;
+        }
+
+        .sidewalk {
+            position: absolute;
+            bottom: 12%;
+            width: 100%;
+            height: 90px;
+            background: #252525;
+            border-top: 4px solid #333;
+            background-image: linear-gradient(90deg, #111 2px, transparent 2px);
+            background-size: 200px 100%;
+            z-index: 5;
+        }
+
+        /* Karaktärer */
+        .char-box {
+            position: absolute;
+            bottom: 20%;
+            display: flex;
+            align-items: flex-end;
+            gap: 140px;
+            left: 15%;
+            z-index: 100;
+        }
+
+        .char {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+        }
+
+        #josef { height: 250px; } 
+        #ali { height: 175px; }
+
+        .hair {
+            position: absolute;
+            top: -12px;
+            width: 100%;
+            height: 28px;
+            background: var(--hair);
+            border-radius: 20px 20px 0 0;
+            z-index: 10;
+        }
+
+        .head {
+            width: 48px;
+            height: 52px;
+            background: var(--skin);
+            border-radius: 20px;
+            position: relative;
+        }
+
+        /* RIKTIGA GLASÖGON TILL ALI */
+        .ali-glasses {
+            position: absolute;
+            top: 22px;
+            left: -2px;
+            width: 52px;
+            height: 16px;
+            z-index: 20;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+        }
+        
+        .lens {
+            width: 18px;
+            height: 14px;
+            border: 2px solid #111;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+            box-shadow: inset 0 0 5px rgba(255,255,255,0.5);
+        }
+
+        .bridge {
+            width: 6px;
+            height: 2px;
+            background: #111;
+            margin-top: 2px;
+        }
+
+        .frame-side {
+            position: absolute;
+            width: 8px;
+            height: 2px;
+            background: #111;
+            top: 4px;
+        }
+        .frame-side.left { left: -4px; transform: rotate(-10deg); }
+        .frame-side.right { right: -4px; transform: rotate(10deg); }
+
+        .face-part { position: absolute; background: #000; }
+        .eye { width: 4px; height: 4px; border-radius: 50%; top: 22px; }
+        .eye.left { left: 12px; }
+        .eye.right { right: 12px; }
+        .mouth { width: 14px; height: 4px; bottom: 8px; left: 17px; border-radius: 2px; }
+
+        .torso-body { width: 65px; border-radius: 10px 10px 2px 2px; }
+        #josef .torso-body { height: 130px; background: var(--josef-shirt); }
+        #ali .torso-body { height: 85px; background: var(--ali-shirt); }
+
+        .leg { width: 22px; height: 50px; background: #000; transform-origin: top; }
+        .moving .leg { animation: walk 0.6s infinite alternate ease-in-out; }
+        @keyframes walk { from { transform: rotate(-22deg); } to { transform: rotate(22deg); } }
+
+        /* Items */
+        .item { position: absolute; display: none; z-index: 120; border-radius: 3px; }
+        #vodka {
+            width: 22px; height: 60px; background: white; right: -30px; top: 70px;
+            border: 1px solid #999; color: blue; font-size: 7px; text-align: center; font-weight: bold;
+        }
+        #cigg {
+            width: 18px; height: 25px; background: white; left: -22px; top: 40px;
+            border: 1px solid #ccc; color: red; font-size: 6px; text-align: center;
+        }
+
+        /* Dialog */
+        .bubble {
+            position: absolute;
+            top: -120px;
+            background: white;
+            padding: 12px 18px;
+            border-radius: 15px;
+            font-size: 16px;
+            color: #000;
+            display: none;
+            min-width: 220px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+            z-index: 500;
+            text-align: center;
+            border: 2px solid #333;
+        }
+
+        .party-mode {
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle, transparent, #ff00ff22, #00ffff22);
+            display: none;
+            z-index: 1000;
+            animation: strobe 0.2s infinite;
+        }
+
+        @keyframes strobe {
+            0% { opacity: 0; }
+            50% { opacity: 1; }
+            100% { opacity: 0; }
+        }
+
+        #ui { position: absolute; top: 20px; width: 100%; text-align: center; z-index: 2000; }
+        button { 
+            padding: 20px 60px; 
+            background: #e74c3c; 
+            color: white; 
+            border: none; 
+            border-radius: 5px; 
+            font-size: 28px; 
+            cursor: pointer;
+            box-shadow: 0 8px #c0392b;
+        }
+    </style>
+</head>
+<body>
+
+<div id="ui">
+    <button id="startBtn">STARTA KVÄLLEN</button>
+</div>
+
+<div class="party-mode" id="disco"></div>
+
+<div class="stage" id="mainStage">
+    <div class="sidewalk" style="bottom: 12%;"></div>
+    <div class="scenery-container" id="city">
+        <div class="torso-bg"></div>
+    </div>
+
+    <div class="char-box" id="crew">
+        <div id="josef" class="char">
+            <div id="j-msg" class="bubble"></div>
+            <div class="hair"></div>
+            <div class="head">
+                <div class="face-part eye left"></div>
+                <div class="face-part eye right"></div>
+                <div class="face-part mouth"></div>
+            </div>
+            <div class="torso-body"></div>
+            <div id="vodka" class="item">ABSOLUT<br>VODKA</div>
+            <div style="display:flex; width:100%; justify-content:space-around;">
+                <div class="leg"></div><div class="leg"></div>
+            </div>
+            <span style="color: white; font-size: 14px;">JOSEF</span>
+        </div>
+
+        <div id="ali" class="char">
+            <div id="a-msg" class="bubble"></div>
+            <div class="hair" style="height: 15px; border-radius: 10px 10px 0 0;"></div>
+            <div class="head">
+                <!-- NYA GLASÖGON -->
+                <div class="ali-glasses">
+                    <div class="frame-side left"></div>
+                    <div class="lens"></div>
+                    <div class="bridge"></div>
+                    <div class="lens"></div>
+                    <div class="frame-side right"></div>
+                </div>
+                <div class="face-part eye left"></div>
+                <div class="face-part eye right"></div>
+                <div class="face-part mouth"></div>
+            </div>
+            <div class="torso-body"></div>
+            <div id="cigg" class="item">CIGG</div>
+            <div style="display:flex; width:100%; justify-content:space-around;">
+                <div class="leg"></div><div class="leg"></div>
+            </div>
+            <span style="color: white; font-size: 14px;">ALI</span>
+        </div>
+    </div>
+</div>
+
+<script>
+    const city = document.getElementById('city');
+    const startBtn = document.getElementById('startBtn');
+    const disco = document.getElementById('disco');
+    
+    // Generera byggnader
+    for(let i=0; i<50; i++) {
+        const b = document.createElement('div');
+        b.className = 'building';
+        b.style.width = '300px';
+        b.style.marginRight = '150px';
+        b.style.height = (350 + Math.random() * 400) + 'px';
+        b.style.background = i % 2 === 0 ? '#111' : '#1a0d0d';
+        b.style.borderLeft = '1px solid #222';
+        for(let j=0; j<15; j++) {
+            const w = document.createElement('div');
+            w.className = 'window';
+            w.style.width = '20px'; w.style.height = '30px';
+            w.style.position = 'absolute';
+            w.style.top = (j * 45 + 30) + 'px';
+            w.style.left = (Math.random() * 260) + 'px';
+            w.style.background = Math.random() > 0.4 ? '#f39c12' : '#1a252f';
+            b.appendChild(w);
+        }
+        city.appendChild(b);
+    }
+
+    // Script med utspridda tider för att undvika överlappning
+    const script = [
+        { t: 2, c: 'j', text: "Hörru fucker, öka farten! Vi ska till Etage, inte gå på promenad!" },
+        { t: 8, c: 'a', text: "Aide brorsan, lugna dig wallah, jag e redan där i huvudet!" },
+        { t: 14, c: 'j', text: "Du e aldrig där i huvudet, ja! Men kolla här vad jag har..." },
+        { t: 18, action: 'vodka' },
+        { t: 19, c: 'j', text: "Nu ska vi supa ner oss helt, fucker!" },
+        { t: 24, c: 'a', text: "ABSOLUT! Wallah ge hit din kahpa, min hals e torr som öknen!" },
+        { t: 30, c: 'j', text: "Drick inte allt nu, vi måste komma förbi vakterna på Etage också!" },
+        { t: 36, c: 'a', text: "Jag skiter i vakterna bre, ikväll äger vi hela Stortorget!" },
+        { t: 41, action: 'cigg' },
+        { t: 42, c: 'a', text: "Ska bara tända en cigg snabbt så jag landar lite!" },
+        { t: 48, c: 'j', text: "Skynda dig då, jag ser lamporna från klubben redan!" },
+        { t: 54, c: 'a', text: "Mannen, ikväll blir det kaos jag svär, ingen kan stoppa oss!" },
+        { t: 60, c: 'j', text: "Exakt, fucker! Drick sista nu så kliver vi in och visar dom!" },
+        { t: 64, c: 'a', text: "Aide! Etage är inte redo för den här duon!" }
+    ];
+
+    function speak(id, text) {
+        const b = document.getElementById(id + '-msg');
+        if(!b) return;
+        b.innerText = text;
+        b.style.display = 'block';
+
+        const s = window.speechSynthesis;
+        const u = new SpeechSynthesisUtterance(text);
+        u.lang = 'sv-SE';
+        u.pitch = id === 'j' ? 0.8 : 1.2;
+        u.rate = 1.0; 
+        s.speak(u);
+
+        setTimeout(() => b.style.display = 'none', 4500);
+    }
+
+    startBtn.onclick = () => {
+        startBtn.style.display = 'none';
+        city.classList.add('moving');
+        document.getElementById('crew').classList.add('moving');
+
+        let s = 0;
+        const clock = setInterval(() => {
+            s++;
+            const line = script.find(x => x.t === s);
+            if(line) {
+                if(line.text) speak(line.c, line.text);
+                if(line.action === 'vodka') document.getElementById('vodka').style.display = 'block';
+                if(line.action === 'cigg') document.getElementById('cigg').style.display = 'block';
+            }
+
+            if(s >= 70) {
+                clearInterval(clock);
+                disco.style.display = 'block';
+                speak('j', "NU KÖR VI KAOS PÅ ETAGE!");
+            }
+        }, 1000);
+    };
+</script>
+
+</body>
+</html>
